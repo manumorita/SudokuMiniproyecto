@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.sudokuproyecto2.controller.SudokuController">
+    <top>
+        <MenuBar>
+            <Menu text="Archivo">
+                <MenuItem text="Nuevo" onAction="#onNewClicked"/>
+                <MenuItem text="Salir" onAction="#onExitClicked"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <GridPane fx:id="sudokuGrid" hgap="5" vgap="5"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnHelp" text="Ayuda" onAction="#onHelpClicked"/>
+                <Button fx:id="btnSolve" text="Resolver" onAction="#onSolveClicked"/>
+            </HBox>
+            <Label fx:id="lblMessage" text="Bienvenido al Sudoku"/>
+        </VBox>
+    </center>
+</BorderPane>
