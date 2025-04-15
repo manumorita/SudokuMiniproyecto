@@ -2,11 +2,25 @@ package com.example.sudokuproyecto2.model;
 
 import java.util.*;
 
+/**
+ * Represents a Sudoku board and provides methods to initialize, solve,
+ * validate, and manipulate the game state.
+ */
 public class Sudoku {
+
+    /**
+     * Represents a coordinate (row, column) on the board.
+     */
     public static class Coordinate {
         public final Integer row;
         public final Integer column;
 
+        /**
+         * Constructs a coordinate with the given row and column.
+         *
+         * @param row    the row index
+         * @param column the column index
+         */
         public Coordinate(Integer row, Integer column) {
             this.row = row;
             this.column = column;
@@ -35,6 +49,14 @@ public class Sudoku {
     public Coordinate lastHelpCoordinate = null;
     public int lastHelpValue = 0;
 
+    /**
+     * Constructs a Sudoku board with given parameters.
+     *
+     * @param size             board size (e.g., 6 for a 6x6 board)
+     * @param block_height     height of each block
+     * @param block_width      width of each block
+     * @param random_elements  number of cells to prefill randomly
+     */
     public Sudoku(int size, int block_height, int block_width, int random_elements) {
         this.size = size;
         this.block_height = block_height;
@@ -43,6 +65,9 @@ public class Sudoku {
         fill_randomly(random_elements);
     }
 
+    /**
+     * Initializes the data structures for the board.
+     */
     private void inicialization() {
         rows = new ArrayList<>(size);
         columns = new ArrayList<>(size);
@@ -56,6 +81,9 @@ public class Sudoku {
         }
     }
 
+    /**
+     * Validates whether a move is legal in the current temporary board.
+     */
     private boolean is_valid_move(int element, int row_position, int column_position) {
         if (temp_rows.get(row_position).contains(element)) return false;
         if (temp_columns.get(column_position).contains(element)) return false;
@@ -71,6 +99,11 @@ public class Sudoku {
         return true;
     }
 
+    /**
+     * Attempts to solve the temporary board using backtracking.
+     *
+     * @return true if a solution is found
+     */
     private boolean solve() {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
@@ -90,6 +123,9 @@ public class Sudoku {
         return true;
     }
 
+    /**
+     * Copies the current board into temporary structures for solving.
+     */
     private void copy_original_board_into_temp() {
         temp_rows = new ArrayList<>();
         temp_columns = new ArrayList<>();
@@ -99,6 +135,11 @@ public class Sudoku {
         }
     }
 
+    /**
+     * Randomly fills a predefined number of cells with valid values.
+     *
+     * @param n number of elements to prefill
+     */
     private void fill_randomly(int n) {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
@@ -134,6 +175,14 @@ public class Sudoku {
         }
     }
 
+    /**
+     * Validates a user's move by checking if the board remains solvable.
+     *
+     * @param value the number entered by the user
+     * @param row   the row position
+     * @param col   the column position
+     * @return true if the move is valid
+     */
     public boolean is_valid_user_move(int value, int row, int col) {
         copy_original_board_into_temp();
         temp_rows.get(row).set(col, value);
@@ -141,36 +190,51 @@ public class Sudoku {
         return solve();
     }
 
+    /**
+     * Finds a valid move to suggest to the user.
+     *
+     * @return true if a hint was found and stored
+     */
     public boolean help() {
         copy_original_board_into_temp();
         Random random = new Random();
+
         if (!available_cells.isEmpty()) {
             Coordinate coordinate = available_cells.get(random.nextInt(available_cells.size()));
             int row = coordinate.row;
             int col = coordinate.column;
 
-            if (!solve()) return false;
-            int value = temp_rows.get(row).get(col);
-
-            lastHelpCoordinate = coordinate;
-            lastHelpValue = value;
-
-            return true;
+            if (solve()) {
+                int value = temp_rows.get(row).get(col);
+                lastHelpCoordinate = coordinate;
+                lastHelpValue = value;
+                return true;
+            }
         }
         return false;
     }
 
+    /**
+     * Applies the last generated help to the board.
+     */
     public void applyHelp() {
-        if (lastHelpCoordinate != null) {
+        if (lastHelpCoordinate != null && lastHelpValue != 0) {
             int row = lastHelpCoordinate.row;
             int col = lastHelpCoordinate.column;
             int value = lastHelpValue;
+
             rows.get(row).set(col, value);
             columns.get(col).set(row, value);
             available_cells.remove(lastHelpCoordinate);
+
+            lastHelpCoordinate = null;
+            lastHelpValue = 0;
         }
     }
 
+    /**
+     * Solves the board completely and updates the official board with the solution.
+     */
     public void solve_board() {
         copy_original_board_into_temp();
         solve();

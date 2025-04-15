@@ -3,10 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,147 +18,145 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: #FFD8D9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sudokuproyecto2.controller.SudokuController">
-
-    <center>
-        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="650.0" spacing="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <Label fx:id="lblMessage1" layoutX="426.0" layoutY="271.0" style="-fx-font-family: 'Bubblegum Sans';" text="GatuSudoku" textAlignment="CENTER" textFill="#f09696">
-                <effect>
-                    <Bloom>
-                        <input>
-                            <DropShadow>
-                                <color>
-                                    <Color red="0.6184210777282715" green="0.27485379576683044" blue="0.27485379576683044" />
-                                </color>
-                            </DropShadow>
-                        </input>
-                    </Bloom>
-                </effect>
-                <font>
-                    <Font size="60.0" />
-                </font>
-            </Label>
-
-            <!-- GridPane 6x6 visible para SceneBuilder -->
-            <GridPane fx:id="sudokuGrid" alignment="CENTER" hgap="5" style="-fx-background-color: #F09696; -fx-border-color: #F09696; -fx-padding: 10; -fx-border-radius: 15; -fx-background-radius: 15;" vgap="5">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="16.6" />
-                    <ColumnConstraints percentWidth="16.6" />
-                    <ColumnConstraints percentWidth="16.6" />
-                    <ColumnConstraints percentWidth="16.6" />
-                    <ColumnConstraints percentWidth="16.6" />
-                    <ColumnConstraints percentWidth="16.6" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints percentHeight="16.6" />
-                    <RowConstraints percentHeight="16.6" />
-                    <RowConstraints percentHeight="16.6" />
-                    <RowConstraints percentHeight="16.6" />
-                    <RowConstraints percentHeight="16.6" />
-                    <RowConstraints percentHeight="16.6" />
-                </rowConstraints>
-
-                <!-- Definir las celdas 6x6 -->
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="0" />
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                <TextField GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                <TextField GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                <TextField GridPane.columnIndex="5" GridPane.rowIndex="5" />
-            </GridPane>
-
-            <!-- Botones -->
-            <HBox alignment="CENTER" spacing="10">
-                <Button fx:id="btnHelp" contentDisplay="CENTER" maxHeight="43.0" maxWidth="78.0" minHeight="43.0" minWidth="78.0" mnemonicParsing="false" onAction="#onHelpClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="78.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Ayuda" textFill="#f09696">
-                    <effect>
-                        <InnerShadow>
-                            <color>
-                                <Color red="0.9411764740943909" green="0.5882353186607361" blue="0.5882353186607361" />
-                            </color>
-                        </InnerShadow>
-                    </effect>
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                    <HBox.margin>
-                        <Insets right="50.0" />
-                    </HBox.margin>
-                </Button>
-                <Button fx:id="btnSolve" maxHeight="43.0" maxWidth="94.0" minHeight="43.0" minWidth="94.0" mnemonicParsing="false" onAction="#onSolveClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="94.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Resolver" textAlignment="CENTER" textFill="#f09696">
-                    <effect>
-                        <InnerShadow>
-                            <color>
-                                <Color red="0.9411764740943909" green="0.5882353186607361" blue="0.5882353186607361" />
-                            </color>
-                        </InnerShadow>
-                    </effect>
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnVerify" maxHeight="43.0" maxWidth="94.0" minHeight="43.0" minWidth="94.0" mnemonicParsing="false" onAction="#onVerifyClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="94.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Verificar" textAlignment="CENTER" textFill="#f09696">
-                    <effect>
-                        <InnerShadow>
-                            <color>
-                                <Color red="0.9411764740943909" green="0.5882353186607361" blue="0.5882353186607361" />
-                            </color>
-                        </InnerShadow>
-                    </effect>
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-               <HBox.margin>
-                  <Insets left="50.0" />
-               </HBox.margin>
-                </Button>
-            </HBox>
-
-            <!-- Mensaje -->
-            <Label fx:id="lblMessage" style="-fx-font-family: 'Bubblegum Sans';" text="¡Bienvenido al GatuSudoku!" textFill="#f09696">
-                <effect>
-                    <DropShadow>
-                        <color>
-                            <Color red="1.0" green="0.6392157077789307" blue="0.6392157077789307" />
-                        </color>
-                    </DropShadow>
-                </effect>
-                <font>
-                    <Font size="25.0" />
-                </font>
-            </Label>
-        </VBox>
-    </center>
-</BorderPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sudokuproyecto2.controller.SudokuController">
+    <children>
+        <ImageView fitHeight="500.0" fitWidth="650.0">
+            <image>
+                <Image url="@images/gaturro.png" />
+            </image>
+        </ImageView>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <VBox alignment="CENTER" minHeight="500.0" minWidth="650.0" prefHeight="500.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="lblMessage1" style="-fx-font-family: 'Bubblegum Sans';" text="GatuSudoku" textAlignment="CENTER" textFill="#f09696">
+                            <effect>
+                                <Bloom>
+                                    <input>
+                                        <DropShadow>
+                                            <color>
+                                                <Color red="1.0" green="0.3529411852359772" blue="0.3529411852359772" />
+                                            </color>
+                                        </DropShadow>
+                                    </input>
+                                </Bloom>
+                            </effect>
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                        </Label>
+                        <GridPane fx:id="sudokuGrid" alignment="CENTER" hgap="5.0" maxHeight="296.0" maxWidth="324.0" minHeight="197.0" minWidth="324.0" prefHeight="278.0" prefWidth="324.0" style="-fx-background-color: #F09696; -fx-border-color: #F09696; -fx-padding: 10; -fx-border-radius: 15; -fx-background-radius: 15;" vgap="5.0">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="16.6" />
+                                <ColumnConstraints percentWidth="16.6" />
+                                <ColumnConstraints percentWidth="16.6" />
+                                <ColumnConstraints percentWidth="16.6" />
+                                <ColumnConstraints percentWidth="16.6" />
+                                <ColumnConstraints percentWidth="16.6" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints percentHeight="16.6" />
+                                <RowConstraints percentHeight="16.6" />
+                                <RowConstraints percentHeight="16.6" />
+                                <RowConstraints percentHeight="16.6" />
+                                <RowConstraints percentHeight="16.6" />
+                                <RowConstraints percentHeight="16.6" />
+                            </rowConstraints>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </GridPane>
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+                                <Button fx:id="btnHelp" contentDisplay="CENTER" maxHeight="43.0" maxWidth="78.0" minHeight="43.0" minWidth="78.0" mnemonicParsing="false" onMouseClicked="#onHelpClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="78.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Ayuda" textFill="#f09696">
+                                    <effect>
+                                        <InnerShadow height="33.36" radius="16.02" width="32.72">
+                                            <color>
+                                                <Color red="0.9607843160629272" green="0.5411764979362488" blue="0.5411764979362488" />
+                                            </color>
+                                            <input>
+                                                <DropShadow>
+                                                    <color>
+                                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                                    </color>
+                                                </DropShadow>
+                                            </input>
+                                        </InnerShadow>
+                                    </effect>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets right="50.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="btnSolve" maxHeight="43.0" maxWidth="94.0" minHeight="43.0" minWidth="94.0" mnemonicParsing="false" onMouseClicked="#onSolveClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="94.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Resolver" textAlignment="CENTER" textFill="#f09696">
+                                    <effect>
+                                        <InnerShadow height="34.0" radius="16.18" width="32.72">
+                                            <color>
+                                                <Color red="0.9607843160629272" green="0.5411764979362488" blue="0.5411764979362488" />
+                                            </color>
+                                            <input>
+                                                <DropShadow>
+                                                    <color>
+                                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                                    </color>
+                                                </DropShadow>
+                                            </input>
+                                        </InnerShadow>
+                                    </effect>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="btnVerify" maxHeight="43.0" maxWidth="94.0" minHeight="43.0" minWidth="94.0" mnemonicParsing="false" onMouseClicked="#onVerifyClicked" pickOnBounds="false" prefHeight="43.0" prefWidth="94.0" style="-fx-font-family: 'Bubblegum Sans'; -fx-background-color: #FCD68D; -fx-border-color: #FCA12E; -fx-background-radius: 15; -fx-border-radius: 15;" text="Verificar" textAlignment="CENTER" textFill="#f09696">
+                                    <effect>
+                                        <InnerShadow height="33.36" radius="16.02" width="32.72">
+                                            <color>
+                                                <Color red="0.9607843160629272" green="0.5411764979362488" blue="0.5411764979362488" />
+                                            </color>
+                                            <input>
+                                                <DropShadow>
+                                                    <color>
+                                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                                    </color>
+                                                </DropShadow>
+                                            </input>
+                                        </InnerShadow>
+                                    </effect>
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="50.0" />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label fx:id="lblMessage" style="-fx-font-family: 'Bubblegum Sans';" text="¡Bienvenido al GatuSudoku!" textFill="#f09696">
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color red="1.0" green="0.3529411852359772" blue="0.3529411852359772" />
+                                    </color>
+                                    <input>
+                                        <Bloom threshold="0.52" />
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                            <font>
+                                <Font size="25.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
