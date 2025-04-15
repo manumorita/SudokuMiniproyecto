@@ -1,6 +1,5 @@
 package com.example.sudokuproyecto2.model;
 
-
 import java.util.*;
 
 public class Sudoku {
@@ -32,6 +31,9 @@ public class Sudoku {
     public ArrayList<Coordinate> available_cells;
 
     private ArrayList<ArrayList<Integer>> temp_rows, temp_columns;
+
+    public Coordinate lastHelpCoordinate = null;
+    public int lastHelpValue = 0;
 
     public Sudoku(int size, int block_height, int block_width, int random_elements) {
         this.size = size;
@@ -139,17 +141,33 @@ public class Sudoku {
         return solve();
     }
 
-    public void help() {
+    public boolean help() {
         copy_original_board_into_temp();
         Random random = new Random();
         if (!available_cells.isEmpty()) {
             Coordinate coordinate = available_cells.get(random.nextInt(available_cells.size()));
             int row = coordinate.row;
             int col = coordinate.column;
+
+            if (!solve()) return false;
             int value = temp_rows.get(row).get(col);
+
+            lastHelpCoordinate = coordinate;
+            lastHelpValue = value;
+
+            return true;
+        }
+        return false;
+    }
+
+    public void applyHelp() {
+        if (lastHelpCoordinate != null) {
+            int row = lastHelpCoordinate.row;
+            int col = lastHelpCoordinate.column;
+            int value = lastHelpValue;
             rows.get(row).set(col, value);
             columns.get(col).set(row, value);
-            available_cells.remove(coordinate);
+            available_cells.remove(lastHelpCoordinate);
         }
     }
 

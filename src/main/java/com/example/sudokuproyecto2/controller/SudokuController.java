@@ -1,9 +1,14 @@
 package com.example.sudokuproyecto2.controller;
-import com.example.sudokuproyecto2.model.Sudoku; // Importación de la clase Sudoku
+
+import com.example.sudokuproyecto2.model.Sudoku;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.control.TextField;
 
 public class SudokuController {
 
@@ -14,10 +19,14 @@ public class SudokuController {
 
     private final TextField[][] cells = new TextField[6][6];
     private Sudoku sudoku;
+    private int helpUses = 0;
 
     @FXML
     public void initialize() {
-        sudoku = new Sudoku(6, 2, 3, 15);  // Inicialización del objeto Sudoku
+        // Cargar la fuente personalizada
+        Font.loadFont(getClass().getResourceAsStream("/com/example/sudokuproyecto2/fonts/BubblegumSans-Regular.ttf"), 16);
+
+        sudoku = new Sudoku(6, 2, 3, 15);
         renderBoard();
     }
 
@@ -28,57 +37,73 @@ public class SudokuController {
                 int value = sudoku.rows.get(row).get(col);
                 TextField tf = new TextField();
                 tf.setPrefSize(50, 50);
-                tf.setFont(new Font(18));
-                tf.setStyle("-fx-alignment: center;");
+                tf.setFont(Font.font("Bubblegum Sans", 16));
+                tf.setStyle("-fx-alignment: center; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
+
                 if (value != 0) {
                     tf.setText(String.valueOf(value));
                     tf.setDisable(true);
-                    tf.setStyle("-fx-background-color: #ddd; -fx-alignment: center;");
+                    tf.setStyle("-fx-background-color: #FFD8D9; -fx-border-color: none; -fx-alignment: center; -fx-text-fill: #F09696;");
                 } else {
                     int finalRow = row;
                     int finalCol = col;
-                    tf.setOnAction(e -> handleUserInput(tf, finalRow, finalCol));
+                    tf.textProperty().addListener((observable, oldValue, newValue) -> handleUserInput(tf, finalRow, finalCol, newValue));
                 }
+
                 cells[row][col] = tf;
                 sudokuGrid.add(tf, col, row);
             }
         }
     }
 
-    private void handleUserInput(TextField tf, int row, int col) {
-        String text = tf.getText().trim();
-        if (!text.matches("[1-6]")) {
+    private void handleUserInput(TextField tf, int row, int col, String newValue) {
+        if (newValue.isEmpty()) {
+            tf.setStyle("-fx-border-color: none; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
+            lblMessage.setText("");
+            return;
+        }
+
+        if (!newValue.matches("[1-6]")) {
+            tf.setStyle("-fx-border-color: #FF6F61; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
             lblMessage.setText("Solo se permiten números del 1 al 6.");
-            tf.setText("");
             return;
         }
-        int value = Integer.parseInt(text);
+
+        int value = Integer.parseInt(newValue);
         Sudoku.Coordinate coord = new Sudoku.Coordinate(row, col);
+
         if (!sudoku.available_cells.contains(coord)) {
+            tf.setStyle("-fx-border-color: #FF6F61; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
             lblMessage.setText("Celda ya llenada.");
-            tf.setText("");
             return;
         }
-        if (sudoku.is_valid_user_move(value, row, col)) {
-            sudoku.rows.get(row).set(col, value);
-            sudoku.columns.get(col).set(row, value);
-            sudoku.available_cells.remove(coord);
-            tf.setDisable(true);
-            tf.setStyle("-fx-background-color: lightgreen; -fx-alignment: center;");
-            lblMessage.setText("Movimiento válido.");
-            if (sudoku.available_cells.isEmpty()) {
-                lblMessage.setText("¡Ganaste!");
-            }
+
+        if (!sudoku.is_valid_user_move(value, row, col)) {
+            tf.setStyle("-fx-border-color: #FF6F61; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
+            lblMessage.setText("Movimiento inválido: número repetido en fila, columna o bloque.");
         } else {
-            tf.setText("");
-            lblMessage.setText("Movimiento inválido.");
+            tf.setStyle("-fx-border-color: #F09696; -fx-background-color: #FFD8D9; -fx-text-fill: #F09696;");
+            lblMessage.setText("");
         }
     }
 
     @FXML private void onHelpClicked() {
-        sudoku.help();
-        renderBoard();
-        lblMessage.setText("Ayuda aplicada.");
+        if (helpUses >= 5) {
+            lblMessage.setText("Límite de ayudas alcanzado.");
+            btnHelp.setDisable(true);
+            return;
+        }
+        if (sudoku.help()) {
+            sudoku.applyHelp();
+            helpUses++;
+            if (helpUses >= 5) {
+                btnHelp.setDisable(true);
+            }
+            renderBoard();
+            lblMessage.setText("Sugerencia aplicada. Ayudas restantes: " + (5 - helpUses));
+        } else {
+            lblMessage.setText("No se pudo aplicar ayuda.");
+        }
     }
 
     @FXML private void onSolveClicked() {
@@ -89,6 +114,8 @@ public class SudokuController {
 
     @FXML private void onNewClicked() {
         sudoku = new Sudoku(6, 2, 3, 15);
+        helpUses = 0;
+        btnHelp.setDisable(false);
         renderBoard();
         lblMessage.setText("Nuevo juego iniciado.");
     }
